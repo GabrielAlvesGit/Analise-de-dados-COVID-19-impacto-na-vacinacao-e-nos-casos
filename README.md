@@ -56,15 +56,13 @@ Thanks goes to these wonderful people:
 ## Descrição do Projeto
 
 <p>
-Este projeto, desenvolvido na disciplina de ESP1A5 - Estatística e Probabilidade,<br> 
-O objetivo principal é analisar dados relacionados à pandemia de COVID-19, utilizando bases globais confiáveis.
+Este projeto, desenvolvido na disciplina de ESP1A5 - Estatística e Probabilidade, utilizando a linguagem Python<br> 
+Focando em casos diários, mortes e vacinação. Utilizando bases de dados confiáveis, como owid-covid-data.csv e vaccinations.csv, são aplicados conceitos de estatística descritiva, probabilidade e inferência estatística para interpretar padrões e identificar impactos da vacinação.
 
-A ideia central é explorar como os dados de casos diários, mortes e vacinação podem ser usados para identificar padrões e fornecer insights significativos. Para isso, o projeto utiliza as seguintes:
+-   *Base1:* owid-covid-data.csv Contém informações globais sobre casos diários, mortes e dados gerais de vacinação.
+-   *Base2:* vaccinations.csv Detalha doses administradas, percentual de cobertura vacinal e progressão da vacinação.
 
--   *Base1:* owid-covid-data.csv (dados de casos diários e vacinação por país). 
--   *Base2:* vaccinations.csv (informações detalhadas sobre doses administradas e cobertura vacinal).
-
-**Devem ser feitos:**
+**Análises Realizadas:**
 
 -   Estatística Descritiva: Explorar medidas como média, mediana, desvio padrão e distribuição dos dados.
     - Qual foi a média de casos diários antes e após o início das campanhas de vacinação?
@@ -75,6 +73,15 @@ A ideia central é explorar como os dados de casos diários, mortes e vacinaçã
 -   Inferência Estatística: Aplicar testes como o teste t para identificar diferenças estatisticamente significativas em períodos ou entre grupos.
     - Existe uma diferença significativa na taxa de mortalidade entre países com alta e baixa cobertura vacinal?
     - A vacinação reduziu significativamente os casos diários em determinados países?
+
+**Devem ser feitos:**
+
+- *Relatório PDF* : <a href="#" title="PDF">Link</a>
+
+--
+
+- *Repositorio da Bases* : <a href="https://github.com/owid/covid-19-data/tree/master/public/data" title="PDF">Link</a>
+- *PDF do Exercicio* : <a href="https://github.com/user-attachments/files/18387236/Projeto_2024s2_Quinta.pdf" title="PDF">Link</a>
 </p>
 
 
