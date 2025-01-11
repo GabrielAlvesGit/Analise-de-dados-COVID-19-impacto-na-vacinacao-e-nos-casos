@@ -84,6 +84,6 @@ Focando em casos diários, mortes e vacinação. Utilizando bases de dados confi
 - *PDF do Exercicio* : <a href="https://github.com/user-attachments/files/18387236/Projeto_2024s2_Quinta.pdf" title="PDF">Link</a>
 </p>
 
-
+## 💻 Layout - Gráficos
 
 
