@@ -35,6 +35,8 @@ def descritiva():
     # Gráfico de novos casos
     axs[0, 0].hist(df["new_cases"].dropna(), bins=30, color="blue", alpha=0.7)
     axs[0, 0].set_title("Distribuição de Novos Casos")
+    axs[0, 0].set_xlabel("Novos Casos")
+    axs[0, 0].set_ylabel("Frequência")
     axs[0, 0].axvline(
         media_novos_casos, color="red", linestyle="dashed", linewidth=1, label="Média"
     )
@@ -67,6 +69,8 @@ def descritiva():
     # Gráfico de vacinação diária
     axs[0, 1].hist(df["daily_vaccinations"].dropna(), bins=30, color="blue", alpha=0.7)
     axs[0, 1].set_title("Distribuição de Vacinação Diária")
+    axs[0, 1].set_xlabel("Vacinações Diárias")
+    axs[0, 1].set_ylabel("Frequência")
     axs[0, 1].axvline(
         media_vacinacao, color="red", linestyle="dashed", linewidth=1, label="Média"
     )
@@ -99,6 +103,8 @@ def descritiva():
     # Gráfico de novas mortes
     axs[0, 2].hist(df["new_deaths"].dropna(), bins=30, color="blue", alpha=0.7)
     axs[0, 2].set_title("Distribuição de Novas Mortes")
+    axs[0, 2].set_xlabel("Novas Mortes")
+    axs[0, 2].set_ylabel("Frequência")
     axs[0, 2].axvline(
         media_mortes, color="red", linestyle="dashed", linewidth=1, label="Média"
     )
@@ -127,18 +133,20 @@ def descritiva():
     # Boxplot de novos casos
     axs[1, 0].boxplot(df["new_cases"].dropna())
     axs[1, 0].set_title("Boxplot de Novos Casos")
+    axs[1, 0].set_xlabel("Novos Casos")
 
     # Boxplot de vacinação diária
     axs[1, 1].boxplot(df["daily_vaccinations"].dropna())
     axs[1, 1].set_title("Boxplot de Vacinação Diária")
+    axs[1, 1].set_xlabel("Vacinações Diárias")
 
     # Boxplot de novas mortes
     axs[1, 2].boxplot(df["new_deaths"].dropna())
     axs[1, 2].set_title("Boxplot de Novas Mortes")
+    axs[1, 2].set_xlabel("Novas Mortes")
 
     plt.tight_layout()
     plt.show()
-
 
 def probabilidade():
     # Probabilidade de registrar mais de 10 mil casos em um dia
@@ -252,24 +260,25 @@ def inferencia():
     )
     plt.show()
 
-
 def serie_temporal():
+    # Converter a coluna de datas para o formato datetime
+    df["date"] = pd.to_datetime(df["date"])
+
+    # Filtrar dados até final 2023
+    df_until_2023 = df[df["date"] <= "2023-05-14"]
+    
+    # Agrupar os dados por mês
+    df_mensal = df_until_2023.resample("ME", on="date").sum()
+
     plt.figure(figsize=(12, 6))
-    sns.lineplot(x="date", y="new_cases", data=df, label="Novos Casos", color="blue")
-    sns.lineplot(
-        x="date",
-        y="daily_vaccinations",
-        data=df,
-        label="Vacinações Diárias",
-        color="green",
-    )
+    sns.lineplot(x=df_mensal.index, y=df_mensal["new_cases"] / 1000, label="Novos Casos (milhares)", color="blue")
+    sns.lineplot(x=df_mensal.index, y=df_mensal["daily_vaccinations"] / 1000, label="Vacinações Diárias (milhares)", color="green")
     plt.title("Evolução de Novos Casos e Vacinação ao Longo do Tempo")
     plt.xlabel("Data")
-    plt.ylabel("Quantidade")
+    plt.ylabel("Quantidade (milhares)")
     plt.legend()
     plt.xticks(rotation=45)
     plt.show()
-
 
 def correlacao():
     correlacao_pearson = df[["new_cases", "daily_vaccinations"]].corr(method="pearson")
@@ -281,7 +290,6 @@ def correlacao():
     sns.heatmap(correlacao_pearson, annot=True, cmap="coolwarm", linewidths=0.5)
     plt.title("Correlação entre Novos Casos e Vacinação Diária")
     plt.show()
-
 
 # Executar análises
 descritiva()
