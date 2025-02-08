@@ -1,152 +1,78 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
 import seaborn as sns
+from scipy.stats import chi2_contingency
 
 # Carregar o dataframe
 df = pd.read_csv("merged_filtered_data.csv")
 
-
 def descritiva():
+    # Coloca 0 nos valores faltantes
+    df.fillna(0, inplace=True)
+    
     # Estatística descritiva
-    # --Média--
-    media_novos_casos = df["new_cases"].mean()
-    media_vacinacao = df["daily_vaccinations"].mean()
-    media_mortes = df["new_deaths"].mean()
-
-    # --Mediana--
-    mediana_novos_casos = df["new_cases"].median()
-    mediana_vacinacao = df["daily_vaccinations"].median()
-    mediana_mortes = df["new_deaths"].median()
-
-    # --Moda--
-    moda_novos_casos = df["new_cases"].mode()[0]
-    moda_vacinacao = df["daily_vaccinations"].mode()[0]
-    moda_mortes = df["new_deaths"].mode()[0]
-
-    # --Desvio padrão--
-    desvio_padrao_novos_casos = df["new_cases"].std()
-    desvio_padrao_vacinacao = df["daily_vaccinations"].std()
-    desvio_padrao_mortes = df["new_deaths"].std()
-
-    # Plotar gráficos
-    fig, axs = plt.subplots(2, 3, figsize=(18, 10))
-
-    # Gráfico de novos casos
-    axs[0, 0].hist(df["new_cases"].dropna(), bins=30, color="blue", alpha=0.7)
-    axs[0, 0].set_title("Distribuição de Novos Casos")
-    axs[0, 0].set_xlabel("Novos Casos")
-    axs[0, 0].set_ylabel("Frequência")
-    axs[0, 0].axvline(
-        media_novos_casos, color="red", linestyle="dashed", linewidth=1, label="Média"
-    )
-    axs[0, 0].axvline(
-        mediana_novos_casos,
-        color="green",
-        linestyle="dashed",
-        linewidth=1,
-        label="Mediana",
-    )
-    axs[0, 0].axvline(
-        moda_novos_casos, color="yellow", linestyle="dashed", linewidth=1, label="Moda"
-    )
-    axs[0, 0].axvline(
-        media_novos_casos + desvio_padrao_novos_casos,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="+1 Desvio Padrão",
-    )
-    axs[0, 0].axvline(
-        media_novos_casos - desvio_padrao_novos_casos,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="-1 Desvio Padrão",
-    )
-    axs[0, 0].legend()
-
-    # Gráfico de vacinação diária
-    axs[0, 1].hist(df["daily_vaccinations"].dropna(), bins=30, color="blue", alpha=0.7)
-    axs[0, 1].set_title("Distribuição de Vacinação Diária")
-    axs[0, 1].set_xlabel("Vacinações Diárias")
-    axs[0, 1].set_ylabel("Frequência")
-    axs[0, 1].axvline(
-        media_vacinacao, color="red", linestyle="dashed", linewidth=1, label="Média"
-    )
-    axs[0, 1].axvline(
-        mediana_vacinacao,
-        color="green",
-        linestyle="dashed",
-        linewidth=1,
-        label="Mediana",
-    )
-    axs[0, 1].axvline(
-        moda_vacinacao, color="yellow", linestyle="dashed", linewidth=1, label="Moda"
-    )
-    axs[0, 1].axvline(
-        media_vacinacao + desvio_padrao_vacinacao,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="+1 Desvio Padrão",
-    )
-    axs[0, 1].axvline(
-        media_vacinacao - desvio_padrao_vacinacao,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="-1 Desvio Padrão",
-    )
-    axs[0, 1].legend()
-
-    # Gráfico de novas mortes
-    axs[0, 2].hist(df["new_deaths"].dropna(), bins=30, color="blue", alpha=0.7)
-    axs[0, 2].set_title("Distribuição de Novas Mortes")
-    axs[0, 2].set_xlabel("Novas Mortes")
-    axs[0, 2].set_ylabel("Frequência")
-    axs[0, 2].axvline(
-        media_mortes, color="red", linestyle="dashed", linewidth=1, label="Média"
-    )
-    axs[0, 2].axvline(
-        mediana_mortes, color="green", linestyle="dashed", linewidth=1, label="Mediana"
-    )
-    axs[0, 2].axvline(
-        moda_mortes, color="yellow", linestyle="dashed", linewidth=1, label="Moda"
-    )
-    axs[0, 2].axvline(
-        media_mortes + desvio_padrao_mortes,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="+1 Desvio Padrão",
-    )
-    axs[0, 2].axvline(
-        media_mortes - desvio_padrao_mortes,
-        color="purple",
-        linestyle="dashed",
-        linewidth=1,
-        label="-1 Desvio Padrão",
-    )
-    axs[0, 2].legend()
-
-    # Boxplot de novos casos
-    axs[1, 0].boxplot(df["new_cases"].dropna())
-    axs[1, 0].set_title("Boxplot de Novos Casos")
-    axs[1, 0].set_xlabel("Novos Casos")
-
-    # Boxplot de vacinação diária
-    axs[1, 1].boxplot(df["daily_vaccinations"].dropna())
-    axs[1, 1].set_title("Boxplot de Vacinação Diária")
-    axs[1, 1].set_xlabel("Vacinações Diárias")
-
-    # Boxplot de novas mortes
-    axs[1, 2].boxplot(df["new_deaths"].dropna())
-    axs[1, 2].set_title("Boxplot de Novas Mortes")
-    axs[1, 2].set_xlabel("Novas Mortes")
-
+    estatisticas_descritivas = df[["new_cases", "daily_vaccinations", "new_deaths", "people_vaccinated"]].describe()
+    print("Estatísticas Descritivas:")
+    print(estatisticas_descritivas)
+    
+    # Histogramas
+    # Novos casos
+    plt.figure(figsize=(12, 6))
+    plt.subplot(1, 3, 1)
+    sns.histplot(df["new_cases"], bins=30, kde=True)
+    plt.title("Histograma de Novos Casos")
+    plt.xlabel("Novos Casos")
+    plt.ylabel("Frequência")
+    
+    # Vacinações diárias
+    plt.subplot(1, 3, 2)
+    sns.histplot(df["daily_vaccinations"], bins=30, kde=True)
+    plt.title("Histograma de Vacinações Diárias")
+    plt.xlabel("Vacinações Diárias")
+    plt.ylabel("Frequência")
+    
+    # Novas mortes
+    plt.subplot(1, 3, 3)
+    sns.histplot(df["new_deaths"], bins=30, kde=True)
+    plt.title("Histograma de Novas Mortes")
+    plt.xlabel("Novas Mortes")
+    plt.ylabel("Frequência")
+    
     plt.tight_layout()
+    plt.show()      
+
+def chi2():
+    bins = 4
+    df["cases_category"] = pd.cut(df["new_cases"], bins=bins, labels=False)
+    df["deaths_category"] = pd.cut(df["new_deaths"], bins=bins, labels=False)
+    
+    # Tabela de contingência
+    contingencia = pd.crosstab(df["cases_category"], [df["deaths_category"]])
+
+    # Teste qui-quadrado
+    qui2, p, _, _ = chi2_contingency(contingencia)
+    
+    # Visualizar com heatmap
+    plt.figure(figsize=(8, 6))
+    sns.heatmap(contingencia, annot=True, cmap="Blues", fmt="d", cbar=False)
+    plt.title("Distribuição de Novos Casos vs. Novas Mortes")
+    plt.xlabel("Novas Mortes (Categorizadas)")
+    plt.ylabel("Novos Casos (Categorizados)")
     plt.show()
+    
+    # Exibir resultados
+    print("Tabela de Contingência:")
+    print(contingencia)
+    print(f"\nValor Qui-Quadrado: {qui2:.4f}")
+    print(f"Valor p: {p:.4f}\n")
+    
+    # Conclusão
+    if p < 0.05:
+        print("Rejeitamos a hipótese nula: as variáveis não são independentes.")
+    else:
+        print("Não rejeitamos a hipótese nula: as variáveis são independentes.")
 
 def probabilidade():
     # Probabilidade de registrar mais de 10 mil casos em um dia
@@ -295,5 +221,6 @@ def correlacao():
 descritiva()
 probabilidade()
 inferencia()
+chi2()
 serie_temporal()
 correlacao()
