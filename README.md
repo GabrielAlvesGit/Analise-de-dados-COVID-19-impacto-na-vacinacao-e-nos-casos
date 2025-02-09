@@ -65,14 +65,14 @@ Focando em casos diários, mortes e vacinação. Utilizando bases de dados confi
 **Análises Realizadas:**
 
 -   Estatística Descritiva: Explorar medidas como média, mediana, desvio padrão e distribuição dos dados.
-    - Qual foi a média de casos diários antes e após o início das campanhas de vacinação?
-    - Qual a variação na taxa de vacinação entre diferentes países?
--   Probabilidade: Calcular a probabilidade de eventos específicos, como altos registros de casos ou mortes.
-    - Qual a probabilidade de um país registrar mais de 10 mil casos em um único dia?
-    - Qual a chance de países com baixa cobertura vacinal apresentarem surtos recorrentes?
--   Inferência Estatística: Aplicar testes como o teste t para identificar diferenças estatisticamente significativas em períodos ou entre grupos.
-    - Existe uma diferença significativa na taxa de mortalidade entre países com alta e baixa cobertura vacinal?
-    - A vacinação reduziu significativamente os casos diários em determinados países?
+    - A média de novos casos diários foi de 22.408,55 antes da vacinação, com grande variação (desvio padrão: 93.117). A vacinação diária teve média de 290.587 doses, influenciada pela disponibilidade e adesão (desvio padrão: 466.559).
+-   Probabilidade:
+    - Chance de um país registrar mais de 10K casos/dia: 55%.
+    - Probabilidade de mais de 100K vacinações diárias: 84%.
+    - Probabilidade de mais de 100 mortes diárias: 57%, reduzindo com o avanço da vacinação.
+-   Inferência Estatística:
+    - Os testes indicam diferença significativa entre as médias antes, durante e depois da vacinação.
+  
 
 **Devem ser feitos:**
 
