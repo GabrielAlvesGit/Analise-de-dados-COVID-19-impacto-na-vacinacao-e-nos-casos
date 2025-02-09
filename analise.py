@@ -13,7 +13,7 @@ def descritiva():
     df.fillna(0, inplace=True)
     
     # Estatística descritiva
-    estatisticas_descritivas = df[["new_cases", "daily_vaccinations", "new_deaths", "people_vaccinated"]].describe()
+    estatisticas_descritivas = df[["new_cases", "daily_vaccinations", "new_deaths"]].describe()
     print("Estatísticas Descritivas:")
     print(estatisticas_descritivas)
     
@@ -22,24 +22,24 @@ def descritiva():
     
     # Novos casos
     plt.subplot(1, 3, 1)
-    sns.histplot(df["new_cases"], bins=30, kde=True, stat="count")  # Alterado para count
+    sns.histplot(df["new_cases"], bins=[1, 10000, 100000, 300000, 1000000])
     plt.title("Histograma de Novos Casos")
     plt.xlabel("Novos Casos")
-    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
+    plt.ylabel("Frequência")
     
     # Vacinações diárias
     plt.subplot(1, 3, 2)
-    sns.histplot(df["daily_vaccinations"], bins=30, kde=True, stat="count")  # Alterado para count
+    sns.histplot(df["daily_vaccinations"], bins=[1, 300000, 500000, 620000])
     plt.title("Histograma de Vacinações Diárias")
     plt.xlabel("Vacinações Diárias")
-    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
+    plt.ylabel("Frequência")
     
     # Novas mortes
     plt.subplot(1, 3, 3)
-    sns.histplot(df["new_deaths"], bins=30, kde=True, stat="count")  # Alterado para count
+    sns.histplot(df["new_deaths"], bins=[1, 2000, 4000, 6000, 8000])
     plt.title("Histograma de Novas Mortes")
     plt.xlabel("Novas Mortes")
-    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
+    plt.ylabel("Frequência")
     
     plt.tight_layout()
     plt.show()
@@ -207,11 +207,24 @@ def serie_temporal():
     plt.xticks(rotation=45)
     plt.show()
 
+def remove_outliers(df, coluna):
+    Q1 = df[coluna].quantile(0.25)
+    Q3 = df[coluna].quantile(0.75)
+    IQR = Q3 - Q1
+    limite_inferior = Q1 - 1.5 * IQR
+    limite_superior = Q3 + 1.5 * IQR
+    return df[(df[coluna] >= limite_inferior) & (df[coluna] <= limite_superior)]
+
 def correlacao():
+    # Removendo outliers para new_cases e daily_vaccinations
+    df_filtrado = df.copy()
+    df_filtrado = remove_outliers(df_filtrado, "new_cases")
+    df_filtrado = remove_outliers(df_filtrado, "daily_vaccinations")
+
     correlacao_pearson = df[["new_cases", "daily_vaccinations"]].corr(method="pearson")
     print("Correlação de Pearson entre novos casos e vacinação diária:")
     print(correlacao_pearson)
-
+    
     # Mapa de calor para melhor visualização
     plt.figure(figsize=(6, 4))
     sns.heatmap(correlacao_pearson, annot=True, cmap="coolwarm", linewidths=0.5)
