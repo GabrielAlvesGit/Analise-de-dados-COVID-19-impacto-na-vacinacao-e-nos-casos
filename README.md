@@ -76,7 +76,7 @@ Focando em casos diários, mortes e vacinação. Utilizando bases de dados confi
 
 **Devem ser feitos:**
 
-- *Relatório PDF* : <a href="#" title="PDF">Link</a>
+- *Relatório PDF* : <a href="https://github.com/GabrielAlvesGit/Analise-de-dados-COVID-19-impacto-na-vacinacao-e-nos-casos/blob/feature-impl-inicial/Trabalho%20Estat%C3%ADstica.pdf" title="PDF">Link</a>
 
 --
 
