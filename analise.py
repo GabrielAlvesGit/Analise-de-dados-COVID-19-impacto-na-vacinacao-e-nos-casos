@@ -17,31 +17,32 @@ def descritiva():
     print("Estatísticas Descritivas:")
     print(estatisticas_descritivas)
     
-    # Histogramas
-    # Novos casos
+    # Histogramas com contagem absoluta
     plt.figure(figsize=(12, 6))
+    
+    # Novos casos
     plt.subplot(1, 3, 1)
-    sns.histplot(df["new_cases"], bins=30, kde=True)
+    sns.histplot(df["new_cases"], bins=30, kde=True, stat="count")  # Alterado para count
     plt.title("Histograma de Novos Casos")
     plt.xlabel("Novos Casos")
-    plt.ylabel("Frequência")
+    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
     
     # Vacinações diárias
     plt.subplot(1, 3, 2)
-    sns.histplot(df["daily_vaccinations"], bins=30, kde=True)
+    sns.histplot(df["daily_vaccinations"], bins=30, kde=True, stat="count")  # Alterado para count
     plt.title("Histograma de Vacinações Diárias")
     plt.xlabel("Vacinações Diárias")
-    plt.ylabel("Frequência")
+    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
     
     # Novas mortes
     plt.subplot(1, 3, 3)
-    sns.histplot(df["new_deaths"], bins=30, kde=True)
+    sns.histplot(df["new_deaths"], bins=30, kde=True, stat="count")  # Alterado para count
     plt.title("Histograma de Novas Mortes")
     plt.xlabel("Novas Mortes")
-    plt.ylabel("Frequência")
+    plt.ylabel("Número de Dias")  # Alterado para clarificar a frequência
     
     plt.tight_layout()
-    plt.show()      
+    plt.show()
 
 def chi2():
     bins = 4
